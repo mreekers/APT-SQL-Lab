@@ -1,0 +1,137 @@
+// (1) have to create a database
+
+CREATE DATABASE apts;
+
+// (2) connect to database
+
+\connect testdb
+
+// (3) to list our tables:
+
+\list 
+
+// (4) we want to create a table for owners and a table for properties
+
+CREATE TABLE owners (
+	owner_id SERIAL PRIMARY KEY,
+	name VARCHAR(50),
+	age INTEGER);
+
+//table owners created 
+
+CREATE TABLE properties (
+	property_id SERIAL PRIMARY KEY,
+	name VARCHAR(80),
+	numbofunits INTEGER,
+	owner_id SERIAL NOT NULL
+);
+
+// table properties created
+
+QUESTIONS
+
+1. Show all the tables.
+
+\dt also shows a list of the tables 
+
+2. Show all the users. 
+
+\du shows all the users in the database 
+
+3. Show all the data in the owners table.
+
+SELECT * FROM owners;
+
+4. Show the names of all owners. 
+
+SELECT name FROM owners;
+
+5. Show the ages of all of the owners in ascending order. 
+
+SELECT * FROM owners ORDER BY age ASC;
+
+selects from the owners table the age row and orders it ascending (using ASC)
+
+6. Show the name of an owner whose name is Donald. 
+
+SELECT name FROM owners donald;
+
+// doesn't work 
+
+7. Show the age of all owners who are older than 30. 
+
+SELECT * FROM owners ORDER BY age >= 30;
+
+// doesn't work ; removed ASC, NOW IT WORKS~!!~!
+
+8. Show the name of all owners whose name starts with an E. 
+
+ SELECT * FROM owners WHERE name = 'e'; 
+
+// looks functioning in this format; may want to replace * w/ the row name 
+
+9. Add an owner named John who is 33 years old to the owners table.
+
+INSERT INTO owners (name, age)
+VALUES
+('John', '33');
+
+10. Add an owner named Jane who is 43 years old to the owners table. 
+
+INSERT INTO owners (name, age)
+VALUES
+('Jane', '43');
+
+11. Change Jane's age to 30. 
+
+UPDATE owners SET age='30' WHERE name = 'Jane';
+
+12. Change Jane's name to Janet. 
+
+UPDATE owners SET name='Janet' WHERE name = 'Jane';
+
+13. Add a property named Archstone that has 20 units. 
+
+INSERT INTO properties (name, numbofunits)
+VALUES
+('Archstone', '20');
+
+14. Delete the owner named Jane. 
+
+DELETE from owners WHERE name = 'Janet';
+
+15. Show all of the properties in alphabetical order that are not named Archstone and do not have an id of 3 or 5. 
+
+SELECT * FROM properties WHERE (no archstone, no id 3/5) GROUP BY 
+
+// Not sure how to do the syntax for the negatives 
+
+16. Count the total number of rows in the properties table.
+
+SELECT * FROM properties;
+
+17. Show the highest age of all owners.
+
+SELECT TOP age FROM owners;
+
+18. Show the names of the first three owners in your owners table.
+
+SELECT TOP name FROM owners WHERE id = 1, 2, 3;
+
+19. Create a foreign key that references the owner_id in the owners table and forces the constraint ON DELETE NO ACTION.
+
+CREATE TABLE taco (
+
+	owners_id INTEGER ON DELETE NO ACTION;
+);
+
+//not sure on this one but google search seemed to indicate it looks something like this
+
+20. Show all of the information from the owners table and the properties table in one joined table.  
+
+SELECT * FROM owners
+	INNER JOIN properties.id
+	ON owners.id = properties.id.owners.id
+	INNER JOIN owners
+	ON properties.id.owners.id = owners.i
+
